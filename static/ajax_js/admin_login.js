@@ -1,8 +1,9 @@
 $('#adminloginbtn').click(()=>{
+    const csrf_token = document.querySelector('[name=csrfmiddlewaretoken]').value;
     var email = $('#email').val()
     var password = $('#password').val()
     var data = {
-        'csrfmiddlewaretoken':'{{csrf_token}}',
+        'csrfmiddlewaretoken':csrf_token,
         'email':email,
         'password':password,
     }
@@ -18,7 +19,7 @@ $('#adminloginbtn').click(()=>{
             dataType:'json',
             success:(data)=>{
                 if(data.success == 'True'){
-                    window.location.replace('login')
+                    window.location.replace('/usercrud/userdata')
                 }else if(data.success == 'False'){
                     $('#warning').text('User Not Valid')
                 }
@@ -26,6 +27,5 @@ $('#adminloginbtn').click(()=>{
         })
     }
 })
-
 
 
