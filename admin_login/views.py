@@ -1,11 +1,11 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.http import JsonResponse
 from Login.models import User 
 from django.contrib.auth.models import auth
 from datetime import datetime, timezone
 # Create your views here.
 def adminlogin(request):
-    
+    if 'admin_session' not in request.session:
         if request.method == 'POST':
             email = request.POST['email']
             password = request.POST['password']
@@ -31,6 +31,14 @@ def adminlogin(request):
                 )
         elif request.method == 'GET':
             return render(request,'admin_login.html')
-
+    elif 'admin_session' in request.session:
+        return redirect('/usercrud/userdata')
 def logout(request):
-    pass
+    if 'admin_session' in request.session:
+        try:
+            request.session.flush()
+            return redirect('/admin/adminlogin')
+        except KeyError:
+            pass
+    elif 'admin_session' not in request.session:
+        return redirect('/usercrud/userdata')
