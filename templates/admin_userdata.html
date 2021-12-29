@@ -37,6 +37,7 @@
             </thead>
             <tbody>
               {% for user in user %}
+              {% if not user.is_superuser%}
               <tr>
                 <th>{{user.id}}</th>
                 <td>{{user.first_name}}</td>
@@ -46,6 +47,7 @@
                 <td><button type="button" class="btn btn-success" id="edit">Edit</button></td>
                 <td><button type="button" class="btn btn-danger" id="delete">Delete</button></td>
               </tr>
+              {% endif %}
               {% endfor %}
             </tbody>
           </table>
