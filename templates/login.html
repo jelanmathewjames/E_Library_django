@@ -18,7 +18,7 @@
             CEA E-Library
             </a>
         </nav>
-        <div class="col-lg-4 col-10 mx-auto" style="margin-top:30px; border-width:thick; border-radius:30px; height:450px; background:linear-gradient(grey,rgb(56, 23, 56)); color:white;">
+        <div class="col-lg-4 col-10 mx-auto" style="margin-top:30px; border-width:thick; border-radius:30px; height:500px; background:linear-gradient(grey,rgb(56, 23, 56)); color:white;">
             <form>
                 {% csrf_token %}
                 <div class="col-lg-8 col-8 ml-auto" style="font-size:30px; font-weight:bolder; padding-top:10px">
@@ -29,8 +29,8 @@
                         <label id="warning"></label>
                     </div>
                     <div class="form-group col-lg-8 col-8 mx-auto">
-                        <label for="username">User Name</label>
-                        <input type="text" class="form-control" id="username" placeholder="User Name">
+                        <label for="email">E-Mail</label>
+                        <input type="text" class="form-control" id="email" placeholder="User Name">
                     </div>
                     <div class="form-group col-lg-8 col-8 mx-auto">
                         <label for="password">Password</label>
@@ -47,4 +47,38 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+<script>
+    $('#loginbtn').click(()=>{
+        const csrf_token = document.querySelector('[name=csrfmiddlewaretoken]').value
+        var email = $('#email').val();
+        var password = $('#password').val();
+        if(email == ''){
+            $('#warning').text('Email Field cannot be empty')
+        }else if(password == ''){
+            $('#warning').text('Password Field cannot be empty')
+        }else{
+            $.ajax({
+                url:'login',
+                method:'POST',
+                data:{
+                    'csrfmiddlewaretoken':csrf_token,
+                    'email':email,
+                    'password':password
+                },
+                dataType:'json',
+                success:(data)=>{
+                    if(data.success == 'True'){
+                        window.location.replace("/")
+                    }else if(data.success == 'Verify'){
+                        $('#warning').text('Your Email is not verified Check your E-mail \n Verify to Log In')
+                    }else if(data.success == 'Email'){
+                        $('#warning').text("The E-mail you entered doesn't belong \n to an account. Please check your \n E-mail and try again.")
+                    }else if(data.success == 'Password'){
+                        $('#warning').text('Sorry, your password was incorrect. \n Please double-check your password.')
+                    }
+                }
+            })
+        }
+    })
+</script>
 </html>

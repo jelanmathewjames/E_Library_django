@@ -45,7 +45,7 @@
                 <td>{{user.email}}</td>
                 <td>{{user.mobile}}</td>
                 <td><button type="button" class="btn btn-success" id="edit">Edit</button></td>
-                <td><button type="button" class="btn btn-danger" id="delete">Delete</button></td>
+                <td><a href="{% url 'deleteuser' user.id %}"><button type="button" class="btn btn-danger" id="delete">Delete</button></a></td>
               </tr>
               {% endif %}
               {% endfor %}
@@ -83,6 +83,7 @@
   $('#create_user').click(()=>{
     window.location.replace('/usercrud/createuser')
   })
+ 
 });
 </script>
 </html>
