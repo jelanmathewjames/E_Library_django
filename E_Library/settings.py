@@ -35,6 +35,7 @@ ALLOWED_HOSTS = []
 
 INSTALLED_APPS = [
     'Login.apps.LoginConfig',
+    'admin_bookcrud.apps.AdminBookcrudConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -82,10 +83,10 @@ WSGI_APPLICATION = 'E_Library.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'library',
+        'NAME': config('NAME'),
         'USER': 'postgres',
-        'PASSWORD':'jelan',
-        'HOST':'localhost',
+        'PASSWORD': config('PASSWORD'),
+        'HOST': config('HOST')
     }
 }
 

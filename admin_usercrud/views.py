@@ -6,6 +6,7 @@ import uuid
 from django.conf import settings
 from django.core.mail import send_mail
 from django.contrib.auth.models import auth
+from datetime import datetime, timezone
 
 # Create your views here.
 def user_data(request):
@@ -36,12 +37,14 @@ def createuser(request):
                 )
             else:
                 email_token = str(uuid.uuid4())
+                current_time = datetime.now(timezone.utc)
                 user = User.objects.create(first_name=firstname,
                                           last_name=lastname,
                                           email=email,
                                           mobile=phonenumber,
                                           password=password,
-                                          email_token=email_token
+                                          email_token=email_token,
+                                          date_joined=current_time
                                           )
                 user.set_password(password)
                 user.save()
