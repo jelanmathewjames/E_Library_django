@@ -7,7 +7,7 @@ class UserManager(BaseUserManager):
                     is_active=True, is_superuser=False,
                     is_staff=False, **extra_fields):
         if not email:
-            raise ValueError('Email is require')
+            raise ValueError('Email is required')
         user = self.model(
             email=self.normalize_email(email),
             is_active = is_active,

@@ -18,7 +18,7 @@ $('#loginbtn').click(()=>{
             dataType:'json',
             success:(data)=>{
                 if(data.success == 'True'){
-                    window.location.replace("/")
+                    window.location.replace("/user/home")
                 }else if(data.success == 'Verify'){
                     $('#warning').text('Your Email is not verified Check your E-mail.\n Verify to Log In')
                 }else if(data.success == 'Email'){

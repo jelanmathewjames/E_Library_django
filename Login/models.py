@@ -16,6 +16,9 @@ class User(AbstractUser):
     date_joined = models.DateTimeField(null=True,blank=True)
     last_login = models.DateTimeField(null=True,blank=True)
     last_logout = models.DateTimeField(null=True,blank=True)
+    book1 = models.IntegerField(null=True,blank=True)
+    book2 = models.IntegerField(null=True,blank=True)
+    book3 = models.IntegerField(null=True,blank=True)
     object = UserManager()
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = ['first_name', 'last_name','mobile']

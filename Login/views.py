@@ -1,7 +1,7 @@
 from django.http.response import JsonResponse
 from django.shortcuts import render, redirect
 from .models import User
-from django.contrib.auth.models import auth
+from django.contrib.auth import authenticate
 from django.http import JsonResponse
 
 
@@ -13,12 +13,12 @@ def login(request):
         password = request.POST['password']
 
         check_email = User.objects.filter(email=email).exists()
-        check_user = auth.authenticate(email=email,password=password)
-
+        check_user = authenticate(email=email,password=password)
+        
         if check_email:
             if check_user is not None:
                 if check_user.is_verified:
-                    request.session['user_session'] = email
+                    request.session['user_session'] = check_user.id
                     return JsonResponse(
                         {'success':'True'},
                         safe = False,
@@ -61,3 +61,6 @@ def verify(request, email_token):
 
 def logout(request):
     pass
+
+def home(request):
+    return render(request,'home.html')

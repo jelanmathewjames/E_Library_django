@@ -10,14 +10,17 @@ from datetime import datetime, timezone
 
 # Create your views here.
 def user_data(request):
+
     if 'admin_session' in request.session:
         user = User.objects.all()
         return render(request,'admin_userdata.html',{'user':user})
+
     elif 'admin_session' not in request.session:
         return redirect('/admin/adminlogin')
 
 
 def createuser(request):
+
     if 'admin_session' in request.session:
         if request.method == 'POST':
             firstname = request.POST['firstname']
@@ -25,16 +28,19 @@ def createuser(request):
             email = request.POST['email']
             phonenumber = request.POST['phonenumber']
             password = request.POST['password']
+
             if User.objects.filter(email=email).exists():
                 return JsonResponse(
                     {'success':'email'},
                     safe = False,
                 )
+
             elif User.objects.filter(mobile=phonenumber).exists():
                 return JsonResponse(
                     {'success':'phone'},
                     safe = False
                 )
+
             else:
                 email_token = str(uuid.uuid4())
                 current_time = datetime.now(timezone.utc)
@@ -48,26 +54,33 @@ def createuser(request):
                                           )
                 user.set_password(password)
                 user.save()
+
+
                 send_mail_after_registration(email,email_token)
                 return JsonResponse(
                     {'success':'True'},
                     safe = False
                 )
+
         elif request.method == 'GET':
             return render(request,'createuser.html')
+
     elif 'admin_session' not in request.session:
         return redirect
 
 def updateuser(request):
+    
     pass
 
 
 def deleteuser(request, id):
+
     User.objects.get(pk=id).delete()
     return redirect('userdata')
 
 
 def send_mail_after_registration(email , token):
+
     subject = 'CEA E_Library Your accounts need to be verified'
     message = f'Hi login through this Link to verify your account http://127.0.0.1:8000/verify/{token} \n '
     email_from = settings.EMAIL_HOST_USER
