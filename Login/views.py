@@ -74,4 +74,8 @@ def logout(request):
         
 
 def home(request):
-    return render(request,'home.html')
+    
+    if 'user_session' not in request.session:
+        return render(request,'home.html')
+    elif 'user_session' in request.session:
+        return redirect('/user/userhome')

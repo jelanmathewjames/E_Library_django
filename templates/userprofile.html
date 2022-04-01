@@ -1,0 +1,49 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="{% static 'css/user.css' %}">
+    <title>CEA Library</title>
+    <link rel="shortcut icon" href="#">
+</head>
+<body style="background:linear-gradient(rgb(255, 182, 255),rgb(236, 236, 161))">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <a class="navbar-brand" href="#">
+        <img src="{% static 'images/library_navbar.jpeg'%}" width="30" height="30" class="d-inline-block align-top" alt="">
+        CEA E-Library
+        </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" style="width:150px;" id="navbarSupportedContent" >
+            <button type="button" class="ml-auto btn btn-danger" id="logout" style="width:150px;">Logout</button>
+        </div>
+    </nav>
+    <div class="container mt-4 mb-4 p-3 d-flex justify-content-center">
+        <div class="card p-4">
+            <div class=" image d-flex flex-column justify-content-center align-items-center">
+                <h3>Profile</h3> 
+                <span class="name mt-3">{{user_details.first_name}} {{user_details.last_name}}</span> 
+                <span class="idd">{{user_details.email}}</span>
+                <div class="d-flex flex-row justify-content-center align-items-center gap-2">
+                </div>
+            </div>
+            <div class="d-flex" style="margin-left: 80px;">
+                <button class="btn1 btn-dark" id="edit_profile">Edit Profile</button> 
+            </div>
+            <div class=" px-2 rounded mt-4 date ">
+                <span class="join">Joined :{{user_details.date_joined}}</span>
+                <br>
+            </div>
+        </div>
+    </div>
+</body>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+<script src="{% static 'ajax_js/userprofile.js'%}"></script>
+</html>
