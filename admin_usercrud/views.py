@@ -50,7 +50,7 @@ def createuser(request):
                                           mobile=phonenumber,
                                           password=password,
                                           email_token=email_token,
-                                          date_joined=current_time
+                                          date_joined=current_time,
                                           )
                 user.set_password(password)
                 user.save()

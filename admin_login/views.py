@@ -3,6 +3,8 @@ from django.http import JsonResponse
 from Login.models import User 
 from django.contrib.auth.models import auth
 from datetime import datetime, timezone
+
+
 # Create your views here.
 def adminlogin(request):
     if 'admin_session' not in request.session:
@@ -33,6 +35,9 @@ def adminlogin(request):
             return render(request,'admin_login.html')
     elif 'admin_session' in request.session:
         return redirect('/usercrud/userdata')
+
+
+        
 def logout(request):
     if 'admin_session' in request.session:
         try:
@@ -41,4 +46,4 @@ def logout(request):
         except KeyError:
             pass
     elif 'admin_session' not in request.session:
-        return redirect('/usercrud/userdata')
+        return redirect('/admin/adminlogin')

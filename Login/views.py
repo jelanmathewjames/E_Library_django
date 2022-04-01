@@ -8,41 +8,44 @@ from django.http import JsonResponse
 # Create your views here.
 
 def login(request):
-    if request.method == 'POST':
-        email = request.POST['email']
-        password = request.POST['password']
+    if 'user_session' not in request.session:
+        if request.method == 'POST':
+            email = request.POST['email']
+            password = request.POST['password']
 
-        check_email = User.objects.filter(email=email).exists()
-        check_user = authenticate(email=email,password=password)
+            check_email = User.objects.filter(email=email).exists()
+            check_user = authenticate(email=email,password=password)
         
-        if check_email:
-            if check_user is not None:
-                if check_user.is_verified:
-                    request.session['user_session'] = check_user.id
-                    return JsonResponse(
-                        {'success':'True'},
-                        safe = False,
-                    )
+            if check_email:
+                if check_user is not None:
+                    if check_user.is_verified:
+                        request.session['user_session'] = check_user.id
+                        return JsonResponse(
+                            {'success':'True'},
+                            safe = False,
+                        )
 
-                else:
+                    else:
+                        return JsonResponse(
+                            {'success':'Verify'},
+                            safe = False,
+                        )
+                else:          
                     return JsonResponse(
-                        {'success':'Verify'},
-                        safe = False,
-                    )
-            else:          
+                            {'success':'Password'},
+                            safe = False,
+                        )
+            elif check_email == False:
                 return JsonResponse(
-                        {'success':'Password'},
-                        safe = False,
-                    )
-        elif check_email == False:
-            return JsonResponse(
                         {'success':'Email'},
                         safe = False,
                     )
 
-    elif request.method == 'GET':
-        return render(request,'login.html')
+        elif request.method == 'GET':
+            return render(request,'login.html')
 
+    elif 'user_session' in request.session:
+        return redirect('user/userhome')
 
 
 
@@ -60,7 +63,15 @@ def verify(request, email_token):
 
 
 def logout(request):
-    pass
+    if 'user_session' in request.session:
+        try:
+            request.session.flush()
+            return redirect('/')
+        except KeyError:
+            pass
+    elif 'user_session' not in request.session:
+        return redirect('/')
+        
 
 def home(request):
     return render(request,'home.html')

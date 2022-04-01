@@ -1,3 +1,4 @@
+from email.policy import default
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 from .manager import UserManager
@@ -16,9 +17,9 @@ class User(AbstractUser):
     date_joined = models.DateTimeField(null=True,blank=True)
     last_login = models.DateTimeField(null=True,blank=True)
     last_logout = models.DateTimeField(null=True,blank=True)
-    book1 = models.JSONField()
-    book2 = models.JSONField()
-    book3 = models.JSONField()
+    book1 = models.JSONField(null=True,blank=True)
+    book2 = models.JSONField(null=True,blank=True)
+    book3 = models.JSONField(null=True,blank=True)
     object = UserManager()
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = ['first_name', 'last_name','mobile']

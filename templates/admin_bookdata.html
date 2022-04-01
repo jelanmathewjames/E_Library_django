@@ -1,0 +1,76 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <title>Document</title>
+    <link rel="shortcut icon" href="#">
+</head>
+<body>
+    <!-- Image and text -->
+    <div style="height: auto; background:linear-gradient(rgb(4, 226, 255),white);">
+        <nav class="navbar navbar-dark bg-dark col-12">
+            <a class="navbar-brand" href="#">
+            <img src="{% static 'images/library_navbar.jpeg'%}" width="30" height="30" class="d-inline-block align-top" alt="">
+            CEA E-Library
+            </a>
+            <div class="my-2 my-lg-0">
+              <button type="button" class="btn btn-success" id="create_book">Create Book</button>
+              <button type="button" class="btn btn-danger"id="logout" style="margin-left: 10px;">Logout</button>
+            </div>
+        </nav>
+        <div class="table-responsive col-11" style="margin-top: 80px; margin-left: 10px; width: 1300px;">
+          <table class="table table-striped table-dark" id="mytable" >
+            <thead>
+              <tr>
+                <th scope="col">ID</th>
+                <th scope="col">Book Name</th>
+                <th scope="col">Book Category</th>
+                <th scope="col">Book Author</th>
+                <th scope="col">Book in Library</th>
+                <th scope="col"></th>
+                <th scope="col"></th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for bookdata in bookdata %}
+              <tr>
+                <th>{{bookdata.id}}</th>
+                <td>{{bookdata.book_name}}</td>
+                <td>{{bookdata.book_category}}</td>
+                <td>{{bookdata.book_author}}</td>
+                <td>{{bookdata.book_inhand}}</td>
+                <td><button type="button" class="btn btn-success" id="edit">Edit</button></td>
+                <td><a href="#"><button type="button" class="btn btn-danger" id="delete">Delete</button></a></td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+          <br>
+          <br>
+          <br>
+          <br>
+          <br>
+          <br>
+          <br>
+          <br>
+          <br>
+          <br>
+          <br>
+          <br>
+          <br>
+          <br>
+          <br>
+          <br>
+    </div>
+</body>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
+<script src="{% static 'ajax_js/admin_bookdata.js'%}"></script>
+</html>

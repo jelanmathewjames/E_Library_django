@@ -21,5 +21,6 @@ urlpatterns = [
     path('',include('Login.urls')),
     path('admin/',include('admin_login.urls')),
     path('usercrud/',include('admin_usercrud.urls')),
+    path('bookcrud/',include('admin_bookcrud.urls')),
     path('user/',include('userinterface.urls'))
 ]
