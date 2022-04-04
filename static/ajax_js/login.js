@@ -30,3 +30,10 @@ $('#loginbtn').click(()=>{
         })
     }
 })
+
+$('#email').keypress((e)=>{
+    if (e.which == 13) {
+        e.preventDefault();
+        $('#warning').text("hello")
+    }
+})

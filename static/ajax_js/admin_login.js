@@ -19,7 +19,7 @@ $('#adminloginbtn').click(()=>{
             dataType:'json',
             success:(data)=>{
                 if(data.success == 'True'){
-                    window.location.replace('/usercrud/userdata')
+                    window.location.replace('/admin/adminhome')
                 }else if(data.success == 'False'){
                     $('#warning').text('User Not Valid')
                 }

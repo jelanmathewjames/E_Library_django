@@ -34,7 +34,7 @@ def adminlogin(request):
         elif request.method == 'GET':
             return render(request,'admin_login.html')
     elif 'admin_session' in request.session:
-        return redirect('/usercrud/userdata')
+        return redirect('/admin/adminhome')
 
 
         
@@ -47,3 +47,11 @@ def logout(request):
             pass
     elif 'admin_session' not in request.session:
         return redirect('/admin/adminlogin')
+
+
+def adminhome(request):
+    if 'admin_session' in request.session:
+        return render(request,'admin_home.html')
+
+    elif 'admin_session' not in request.session:
+        return redirect('admin/adminlogin')

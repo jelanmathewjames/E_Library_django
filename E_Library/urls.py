@@ -26,6 +26,7 @@ urlpatterns = [
     path('bookcrud/',include('admin_bookcrud.urls')),
     path('user/',include('userinterface.urls')),
     path('explore/',include('explore.urls')),
+    path('book/',include('book.urls')),
 ]
 
 urlpatterns = urlpatterns + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

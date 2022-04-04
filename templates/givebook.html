@@ -1,0 +1,203 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <title>Document</title>
+    <link rel="shortcut icon" href="#">
+</head>
+<body>
+    <!-- Image and text -->
+    <div style="height: auto; background:linear-gradient(rgb(4, 226, 255),white);">
+        <nav class="navbar navbar-dark bg-dark col-12">
+            <a class="navbar-brand" href="#">
+            <img src="{% static 'images/library_navbar.jpeg'%}" width="30" height="30" class="d-inline-block align-top" alt="">
+            CEA E-Library
+            </a>
+            <div class="my-2 my-lg-0">
+              <button type="button" class="btn btn-danger"id="logout" style="margin-left: 10px;">Logout</button>
+            </div>
+        </nav>
+        <div class="form-group col-lg-8 col-8 mx-auto">
+          <label id="warning"></label>
+        </div>
+        <div class="form-group col-lg-4 col-8 mx-auto">
+          {% csrf_token %}
+          <label for="ID">User ID</label>
+          <input type="number" class="form-control" id="userid" placeholder="User ID" autocomplete="off">
+        </div>
+      <div class="mx-auto col-lg-2 col-6"style="margin-top:30px">
+          <button type="button" class="btn btn-primary" id="search">Search</button>
+          <button type="button" class="btn btn-primary" id="clear">Clear</button>
+      </div>
+      <div class="container mt-4 mb-4 p-3 d-flex justify-content-center">
+        {% if user != None%}
+        <div class="card p-4">
+            <div class=" image d-flex flex-column justify-content-center align-items-center">
+                <h3>Profile</h3> 
+                <span class="name mt-3">{{user.first_name}} {{user.last_name}}</span> 
+                <span class="idd">{{user.email}}</span>
+            </div>
+            <div class="d-flex" style="margin-left: 60px;">
+                <span class="name mt-3">Book 1</span>
+                {% if user.book1 != None%}
+                <span class="name mt-3" style="margin-left: 5px;">Book name:{{book1.book_name}}</span>
+                {% endif %}
+                {% if user.book1 == None %}
+                <input type="number" class="form-control col-lg-6" id="bookid1" placeholder="Book ID" autocomplete="off">
+                <button class="btn1 btn-dark" id="bookbtn1">Give Book</button> 
+                {% endif %}
+            </div>
+            <br>
+            <div class="d-flex" style="margin-left: 60px;">
+              <span class="name mt-3">Book 2</span>
+              {% if user.book2 != None%}
+              <span class="name mt-3" style="margin-left: 5px;">Book name:{{book2.book_name}}</span>
+              {% endif %}
+              {% if user.book2 == None %}
+              <input type="number" class="form-control col-lg-6" id="bookid2" placeholder="Book ID" autocomplete="off">
+              <button class="btn1 btn-dark" id="bookbtn2">Give Book</button> 
+              {% endif %}
+            </div>
+          <br>
+
+          <div class="d-flex" style="margin-left: 60px;">
+            <span class="name mt-3">Book 3</span>
+            {% if user.book3 != None%}
+            <span class="name mt-3" style="margin-left: 5px;">Book name:{{book3.book_name}}</span>
+            {% endif %}
+            {% if user.book3 == None %}
+            <input type="number" class="form-control col-lg-6" id="bookid3" placeholder="Book ID" autocomplete="off">
+            <button class="btn1 btn-dark" id="bookbtn3">Give Book</button> 
+            {% endif %}
+          </div>
+            <div class=" px-2 rounded mt-4 date ">
+                <span class="join">Joined :{{user.date_joined}}</span>
+                <br>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+    </div>
+</body>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+<script>
+  $('#search').click(()=>{
+    const csrf_token = document.querySelector('[name=csrfmiddlewaretoken]').value
+    var userid = $('#userid').val()
+    if(userid==""){
+      $('#warning').text("Id Field cannot be Empty")
+    }
+    $.ajax({
+      url : '/book/givebook',
+      method : 'POST',
+      data :  {
+        'csrfmiddlewaretoken' :csrf_token,
+        'userid' : userid
+      },
+      dataType: 'json',
+      success:(data)=>{
+        if(data.success =='True'){
+          window.location.replace('/book/givebook')
+        }else if(data.success == 'False'){
+          $('#warning').text("No User with This ID")
+        }
+      }
+    })
+  })
+  $('#clear').click(()=>{
+    $.ajax({
+      url:'/book/clear',
+      method:'GET',
+      success:(data)=>{
+        if(data.success == 'True'){
+          window.location.replace('/book/givebook')
+        }
+      }
+    })
+  })
+  $('#bookbtn1').click(()=>{
+    const csrf_token = document.querySelector('[name=csrfmiddlewaretoken').value
+    var book1 = $('#bookid1').val()
+    if(book1==''){
+      $('#warning').text("Book ID field cannot be empty")
+    }else{
+      $.ajax({
+        url:'/book/book1',
+        method:'POST',
+        data:{
+          'csrfmiddlewaretoken':csrf_token,
+          'book1':book1
+        },
+        dataType:'json',
+        success:(data)=>{
+          if(data.success == 'True'){
+            window.location.replace('/book/givebook')
+          }else if (data.success == 'False'){
+            $('#warning').text("No book for this ID")
+          }else if (data.success == 'Alreadyinhand'){
+            $('#warning').text("Book is Already in Another Student")
+          }
+        }
+      })
+    }
+  })
+  $('#bookbtn2').click(()=>{
+    const csrf_token = document.querySelector('[name=csrfmiddlewaretoken').value
+    var book2 = $('#bookid2').val()
+    if(book2==''){
+      $('#warning').text("Book ID field cannot be empty")
+    }else{
+      $.ajax({
+        url:'/book/book2',
+        method:'POST',
+        data:{
+          'csrfmiddlewaretoken':csrf_token,
+          'book2':book2
+        },
+        dataType:'json',
+        success:(data)=>{
+          if(data.success == 'True'){
+            window.location.replace('/book/givebook')
+          }else if (data.success == 'False'){
+            $('#warning').text("No book for this ID")
+          }else if (data.success == 'Alreadyinhand'){
+            $('#warning').text("Book is Already in Another Student")
+          }
+        }
+      })
+    }
+  })
+  $('#bookbtn3').click(()=>{
+    const csrf_token = document.querySelector('[name=csrfmiddlewaretoken').value
+    var book3 = $('#bookid3').val()
+    if(book3==''){
+      $('#warning').text("Book ID field cannot be empty")
+    }else{
+      $.ajax({
+        url:'/book/book3',
+        method:'POST',
+        data:{
+          'csrfmiddlewaretoken':csrf_token,
+          'book3':book3
+        },
+        dataType:'json',
+        success:(data)=>{
+          if(data.success == 'True'){
+            window.location.replace('/book/givebook')
+          }else if (data.success == 'False'){
+            $('#warning').text("No book for this ID")
+          }else if (data.success == 'Alreadyinhand'){
+            $('#warning').text("Book is Already in Another Student")
+          }
+        }
+      })
+    }
+  })
+</script>
+</html>
