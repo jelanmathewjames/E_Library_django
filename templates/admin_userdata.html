@@ -1,22 +1,9 @@
+{% extends 'admin_login.html' %}
 {% load static %}
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-    <title>Document</title>
-    <link rel="shortcut icon" href="#">
-</head>
-<body>
-    <!-- Image and text -->
+{% block background %}
     <div style="height: auto; background:linear-gradient(rgb(4, 226, 255),white);">
-        <nav class="navbar navbar-dark bg-dark col-12">
-            <a class="navbar-brand" href="#">
-            <img src="{% static 'images/library_navbar.jpeg'%}" width="30" height="30" class="d-inline-block align-top" alt="">
-            CEA E-Library
-            </a>
+{% endblock %}
+{% block common %}
             <div class="my-2 my-lg-0">
               <button type="button" class="btn btn-success" id="create_user">Create User</button>
               <button type="button" class="btn btn-danger"id="logout" style="margin-left: 10px;">Logout</button>

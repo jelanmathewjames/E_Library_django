@@ -1,22 +1,9 @@
+{% extends 'admin_login.html' %}
 {% load static %}
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-    <title>Document</title>
-    <link rel="shortcut icon" href="#">
-</head>
-<body>
-    <!-- Image and text -->
+{% block background %}
     <div style="background-image:url('static/images/library_background.jpeg'); height: 650px;">
-        <nav class="navbar navbar-dark bg-dark">
-            <a class="navbar-brand" href="#">
-            <img src="{% static 'images/library_navbar.jpeg'%}" width="30" height="30" class="d-inline-block align-top" alt="">
-            CEA E-Library
-            </a>
+{% endblock %}
+{% block common %}
         </nav>
         <div class="col-lg-4 col-10 mx-auto" style="margin-top:30px; border-width:thick; border-radius:30px; height:500px; background:linear-gradient(grey,rgb(56, 23, 56)); color:white;">
             <form>
@@ -49,3 +36,4 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 <script src="{% static 'ajax_js/login.js'%}"></script>
 </html>
+{% endblock %}
