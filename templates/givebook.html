@@ -100,7 +100,7 @@
   })
   $('#clear').click(()=>{
     $.ajax({
-      url:'/book/clear',
+      url:'/book/clearuser',
       method:'GET',
       success:(data)=>{
         if(data.success == 'True'){

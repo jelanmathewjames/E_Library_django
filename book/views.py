@@ -1,3 +1,4 @@
+from curses import BUTTON1_DOUBLE_CLICKED
 from django.http import JsonResponse
 from django.shortcuts import redirect, render
 from Login.models import User
@@ -9,13 +10,13 @@ def givebook(request):
     if request.method == 'POST':
         userid = request.POST['userid']
         user = User.object.filter(pk=userid).exists()
-        if user != False:
+        if user:
             request.session['userid'] = userid
             return JsonResponse(
                 {'success':'True'},
                 safe = False
             )
-        elif user == False:
+        elif not user:
             return JsonResponse(
                 {'success':'False'},
                 safe = False
@@ -44,10 +45,7 @@ def givebook(request):
 
         return render(request,'givebook.html',{'user':user,'book1':book1,'book2':book2,'book3':book3})
 
-def returnbook(request):
-    pass
-
-def clear(request):
+def clearuser(request):
     if request.method == 'GET':
         try:
             del request.session['userid']
@@ -138,3 +136,92 @@ def book3(request):
                 {'success':'False'},
                 safe = False
             )
+
+def returnbook(request):
+    if request.method == 'POST':
+        bookid = request.POST['bookid']
+        book = Book.objects.filter(pk=bookid).exists()
+        if book:
+            request.session['bookid'] = bookid
+            return JsonResponse(
+                {'success':'True'},
+                safe = False
+            )
+        elif not book:
+            return JsonResponse(
+                {'success':'False'},
+                safe = False
+            )
+    elif request.method == 'GET':
+        user = None
+        book = None
+        book_slot = None
+        book_givendate = None
+
+        if 'bookid' in request.session:
+            book = Book.objects.get(pk=request.session['bookid'])
+
+            if book.book_inhand:
+                userid = book.book_inhandid
+                user = User.objects.get(pk=userid)
+
+                book1 = user.book1
+                book2 = user.book2
+                book3 = user.book3
+
+                if book1 != None:
+                    if int(book1.get('id')) == book.id:
+                        book_slot = '1 st SLOT'
+                        book_givendate = user.book1.get('date')
+                elif book2 != None:
+                    if int(book2.get('id')) == book.id:
+                        book_slot = '2 st SLOT'
+                        book_givendate = user.book2.get('date')
+                elif book3 != None:
+                    if int(book3.get('id')) == book.id:
+                        book_slot = '3 st SLOT'
+                        book_givendate = user.book3.get('date')
+                        
+            elif not book.book_inhand:
+                user = False
+        return render(request,'returnbook.html',{'user':user,'book':book,'book_slot':book_slot,'book_givendate':book_givendate})
+
+
+def confirmreturn(request):
+    if request.method == 'POST':
+        book = Book.objects.get(pk=request.session['bookid'])
+        userid = book.book_inhandid
+        user = User.objects.get(pk=userid)
+
+        book1 = user.book1
+        book2 = user.book2
+        book3 = user.book3
+
+        if book1 != None:
+            if int(book1.get('id')) == book.id:
+                User.objects.filter(pk=userid).update(book1=None)
+        elif book2 != None:
+            if int(book2.get('id')) == book.id:
+                User.objects.filter(pk=userid).update(book2=None)
+        elif book3 != None:
+            if int(book3.get('id')) == book.id:
+                User.objects.filter(pk=userid).update(book3=None)
+
+        Book.objects.filter(pk=request.session['bookid']).update(book_inhandid=None,book_inhand=False)
+        return JsonResponse(
+            {'success':'True'},
+            safe = False
+        )
+        
+
+
+def clearbook(request):
+    if request.method == 'GET':
+        try:
+            del request.session['bookid']
+            return JsonResponse(
+                {'success':'True'},
+                safe = False
+            )
+        except KeyError:
+            return redirect('/book/givebook')

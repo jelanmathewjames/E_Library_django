@@ -1,0 +1,113 @@
+{% extends 'admin_login.html' %}
+{% load static %}
+{% block background %}
+    <div style="height: 700px; background:linear-gradient(rgb(4, 226, 255),white);">
+{% endblock %}
+{% block common %}
+            <div class="my-2 my-lg-0">
+              <button type="button" class="btn btn-success" id="home">Home</button>
+              <button type="button" class="btn btn-danger"id="logout" style="margin-left: 10px;">Logout</button>
+            </div>
+        </nav>
+        <div class="form-group col-lg-8 col-8 mx-auto">
+            <label id="warning"></label>
+          </div>
+          <div class="form-group col-lg-4 col-8 mx-auto">
+            {% csrf_token %}
+            <label for="ID">Book ID</label>
+            <input type="number" class="form-control" id="bookid" placeholder="Book ID" autocomplete="off">
+          </div>
+        <div class="mx-auto col-lg-2 col-6"style="margin-top:30px">
+            <button type="button" class="btn btn-primary" id="search">Search</button>
+            <button type="button" class="btn btn-primary" id="clear">Clear</button>
+        </div>
+        <div class="container mt-4 mb-4 p-3 d-flex justify-content-center">
+        {% if book != None %}
+            <div class="card p-4">
+              <div class=" image d-flex flex-column justify-content-center align-items-center">
+                  <h3>Book Details</h3> 
+                  <span class="name mt-3">Name: {{book.book_name}}</span> 
+                  <span class="idd">Author: {{book.book_author}}</span>
+              </div>
+              <br>
+        {% endif %}
+        {% if user == False %}
+        <p class="justify-content-center align-items-center">Book is in Library</p>
+        {% endif %}
+        {% if user != None and user != False%}
+              <h3 class="justify-content-center align-items-center" style="margin-left: 80px;">Book Holder Details</h3>
+              <div class="d-flex" style="margin-left: 60px;margin-top: 5px;">
+                  <span class="name mt-3">Name : {{user.first_name}} {{user.last_name}}</span> 
+              </div>
+              
+              <div class=" px-2 rounded mt-4 date ">
+                  <span class="join" id="bookslot">{{book_slot}}</span>
+                  <br>
+                  <span class="join">Given Date :{{book_givendate}}</span>
+                  <br>
+              </div>
+              <button class="btn1 btn-dark" id="returnbook">Return Book</button>
+            </div>
+        {% endif %}
+          
+        </div>
+       
+    </div> 
+</body>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+<script>
+  $('#search').click(()=>{
+    const csrf_token = document.querySelector('[name=csrfmiddlewaretoken]').value
+    var bookid = $('#bookid').val()
+    if(bookid == ""){
+      $('#warning').text("Id Field cannot be Empty")
+    }
+    $.ajax({
+      url : '/book/returnbook',
+      method : 'POST',
+      data :  {
+        'csrfmiddlewaretoken' :csrf_token,
+        'bookid' : bookid
+      },
+      dataType: 'json',
+      success:(data)=>{
+        if(data.success =='True'){
+          window.location.replace('/book/returnbook')
+        }else if(data.success == 'False'){
+          $('#warning').text("No User with This ID")
+        }
+      }
+    })
+  })
+  $('#clear').click(()=>{
+    $.ajax({
+      url:'/book/clearbook',
+      method:'GET',
+      success:(data)=>{
+        if(data.success == 'True'){
+          window.location.replace('/book/returnbook')
+        }
+      }
+    })
+  })
+  $('#returnbook').click(()=>{
+    const csrf_token = document.querySelector('[name=csrfmiddlewaretoken]').value
+    $.ajax({
+      url:'/book/confirmreturn',
+      method:'POST',
+      data:{
+        'csrfmiddlewaretoken':csrf_token,
+      },
+      dataType:'json',
+      success:(data)=>{
+        if(data.success == 'True'){
+          window.location.replace('/book/returnbook')
+        }
+      }
+    })
+  })
+</script>
+</html>
+{% endblock %}
