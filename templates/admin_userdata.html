@@ -33,7 +33,6 @@
                 <td>{{user.email}}</td>
                 <td>{{user.mobile}}</td>
                 <td><button type="button" class="btn btn-success" id="edit">Edit</button></td>
-                <td><button type="button" class="btn btn-primary" id="edit">Give Book</button></td>
                 <td><a href="{% url 'deleteuser' user.id %}"><button type="button" class="btn btn-danger" id="delete">Delete</button></a></td>
               </tr>
               {% endif %}
@@ -65,3 +64,4 @@
 <script type="text/javascript" src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
 <script src="{% static 'ajax_js/admin_userdata.js'%}"></script>
 </html>
+{% endblock %}

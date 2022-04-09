@@ -66,7 +66,7 @@ def createuser(request):
             return render(request,'createuser.html')
 
     elif 'admin_session' not in request.session:
-        return redirect
+        return redirect('/admin/adminlogin')
 
 def updateuser(request):
     
@@ -74,9 +74,12 @@ def updateuser(request):
 
 
 def deleteuser(request, id):
-
-    User.objects.get(pk=id).delete()
-    return redirect('userdata')
+    if 'admin_session' in request.session:
+        User.objects.get(pk=id).delete()
+        return redirect('userdata')
+        
+    elif 'admin_session' not in request.session:
+        return redirect('/admin/adminlogin')
 
 
 def send_mail_after_registration(email , token):

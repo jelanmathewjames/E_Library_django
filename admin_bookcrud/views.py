@@ -24,3 +24,10 @@ def createbook(request):
             return render(request,'bookcrud.html',{'form':form})
     elif 'admin_session' not in request.session:
         return redirect('admin/adminlogin')
+
+def deletebook(request,id):
+    if 'admin_session' in request.session:
+        Book.objects.get(pk=id).delete()
+        return redirect('bookdata')
+    elif 'admin_session' not in request.session:
+        return redirect('admin/adminlogin')

@@ -32,7 +32,7 @@
                 <td>{{bookdata.book_author}}</td>
                 <td>{{bookdata.book_inhand}}</td>
                 <td><button type="button" class="btn btn-success" id="edit">Edit</button></td>
-                <td><a href="#"><button type="button" class="btn btn-danger" id="delete">Delete</button></a></td>
+                <td><a href="{% url 'deletebook' bookdata.id %}"><button type="button" class="btn btn-danger" id="delete">Delete</button></a></td>
               </tr>
               {% endfor %}
             </tbody>
