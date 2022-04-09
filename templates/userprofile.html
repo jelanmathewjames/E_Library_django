@@ -4,15 +4,11 @@
 <div style="background:linear-gradient(rgb(255, 182, 255),rgb(236, 236, 161))">
 {% endblock %}
 {% block common %}
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-        <a class="navbar-brand" href="#">
-        <img src="{% static 'images/library_navbar.jpeg'%}" width="30" height="30" class="d-inline-block align-top" alt="">
-        CEA E-Library
-        </a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" style="width:150px;" id="navbarSupportedContent" >
+            <button type="button" class="ml-auto btn btn-success" id="home" style="width:150px;">Home</button>
             <button type="button" class="ml-auto btn btn-danger" id="logout" style="width:150px;">Logout</button>
         </div>
     </nav>

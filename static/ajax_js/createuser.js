@@ -43,3 +43,12 @@ $('#createuser').click(()=>{
         })
     }
 })
+$('#home').click(()=>{
+    window.location.replace('/admin/adminhome')
+})
+$('#userdata').click(()=>{
+    window.location.replace('/usercrud/userdata')
+})
+$('#logout').click(()=>{
+    window.location.replace('/admin/adminlogout')
+})
