@@ -18,18 +18,12 @@ def login(request):
         
             if check_email:
                 if check_user is not None:
-                    if check_user.is_verified:
-                        request.session['user_session'] = check_user.id
-                        return JsonResponse(
-                            {'success':'True'},
-                            safe = False,
-                        )
+                    request.session['user_session'] = check_user.id
+                    return JsonResponse(
+                        {'success':'True'},
+                        safe = False,
+                    )
 
-                    else:
-                        return JsonResponse(
-                            {'success':'Verify'},
-                            safe = False,
-                        )
                 else:          
                     return JsonResponse(
                             {'success':'Password'},
@@ -48,8 +42,8 @@ def login(request):
         return redirect('user/userhome')
 
 
-
-def verify(request, email_token):
+#function to verify the email
+'''def verify(request, email_token):
     token_verification = User.objects.filter(email_token=email_token).first()
     if token_verification:
         if token_verification.is_verified:
@@ -59,7 +53,7 @@ def verify(request, email_token):
             token_verification.save()
             return render(request,'verify.html',{'message':'Verification Completed'})
     else:
-        return redirect('/')
+        return redirect('/')'''
 
 
 def logout(request):

@@ -19,8 +19,6 @@ $('#loginbtn').click(()=>{
             success:(data)=>{
                 if(data.success == 'True'){
                     window.location.replace("/user/userhome")
-                }else if(data.success == 'Verify'){
-                    $('#warning').text('Your Email is not verified Check your E-mail.\n Verify to Log In')
                 }else if(data.success == 'Email'){
                     $('#warning').text("The E-mail you entered doesn't belong \n to an account. Please check your \n E-mail and try again.")
                 }else if(data.success == 'Password'){
