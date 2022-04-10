@@ -85,10 +85,10 @@ WSGI_APPLICATION = 'E_Library.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME' : 'library',
-        'USER': 'postgres',
-        'PASSWORD' : 'jelan',
-        'HOST' : 'localhost',
+        'NAME' : 'd26htt1900smip',
+        'USER': 'fnansbzwjdobmb',
+        'PASSWORD' : 'a571f81ca8ebc1ca2559cc380427acc54b81ed0652ee6eb0e0596192a9249960',
+        'HOST' : 'ec2-52-54-212-232.compute-1.amazonaws.com',
        
     }
 }
