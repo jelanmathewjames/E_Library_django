@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-n5h&x0@7y_&7gdcv18)^dk3diy!pq-ksqxuhm@=mmo_3kp^e=l
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
-ALLOWED_HOSTS = [ '*', 'collegelibrarymanager.com' ]
+ALLOWED_HOSTS = [ '127.0.0.1', 'https://collegelibrarymanager.herokuapp.com/' ]
 
 
 # Application definition
