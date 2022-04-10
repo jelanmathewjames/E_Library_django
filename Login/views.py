@@ -42,7 +42,8 @@ def login(request):
                     )
 
         elif request.method == 'GET':
-            return render(request,'login.html')
+            user = User.objects.all()
+            return render(request,'login.html',{'user':user})
 
     elif 'user_session' in request.session:
         return redirect('user/userhome')
