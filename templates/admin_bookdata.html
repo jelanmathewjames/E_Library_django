@@ -33,7 +33,15 @@
                 <td>{{bookdata.book_author}}</td>
                 <td>{{bookdata.book_inhand}}</td>
                 <td><button type="button" class="btn btn-success" id="edit">Edit</button></td>
-                <td><a href="{% url 'deletebook' bookdata.id %}"><button type="button" class="btn btn-danger" id="delete">Delete</button></a></td>
+                <td>
+                  {% if not bookdata.book_inhand %}
+                  <a href="{% url 'deletebook' bookdata.id %}">
+                    <button type="button" class="btn btn-danger">Delete</button>
+                  </a>
+                  {% else %}
+                  <button type="button" class="btn btn-danger" id="delete">Delete</button>
+                  {% endif %}
+                </td>
               </tr>
               {% endfor %}
             </tbody>

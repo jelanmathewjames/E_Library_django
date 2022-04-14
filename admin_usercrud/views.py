@@ -72,7 +72,17 @@ def updateuser(request):
 
 def deleteuser(request, id):
     if 'admin_session' in request.session:
-        User.objects.get(pk=id).delete()
+        user = User.objects.get(pk=id)
+        
+        if user.book1 != None:
+            pass
+        elif user.book2 != None:
+            pass
+        elif user.book3 != None:
+            pass
+        else:
+            user.delete()
+
         return redirect('userdata')
         
     elif 'admin_session' not in request.session:

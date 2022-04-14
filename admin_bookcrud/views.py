@@ -2,6 +2,7 @@ from django.http import JsonResponse
 from django.shortcuts import render , redirect
 from . models import Book
 from . forms import BookForm
+from Login.models import User
 # Create your views here.
 
 
@@ -27,7 +28,12 @@ def createbook(request):
 
 def deletebook(request,id):
     if 'admin_session' in request.session:
-        Book.objects.get(pk=id).delete()
+        book = Book.objects.get(pk=id)
+        if book.book_inhand:
+            pass
+
+        elif not book.book_inhand:    
+            book.delete()
         return redirect('bookdata')
     elif 'admin_session' not in request.session:
         return redirect('admin/adminlogin')
