@@ -97,7 +97,7 @@ def deleteuser(request, id):
 def send_mail_after_registration(email , token):
 
     subject = 'CEA E_Library Your accounts need to be verified'
-    message = f'Hi login through this Link to verify your account http://127.0.0.1:8000/verify/{token} \n '
+    message = f'Hi login through this Link to verify your account http://collegelibrarymanager.herokuapp.com/verify/{token} \n '
     email_from = settings.EMAIL_HOST_USER
     recipient_list = [email]
     send_mail(subject, message , email_from ,recipient_list )
