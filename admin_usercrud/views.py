@@ -3,6 +3,8 @@ from django.shortcuts import render, redirect
 from Login.models import User
 from django.http import JsonResponse
 import uuid
+from django.conf import settings
+from django.core.mail import send_mail
 from django.contrib.auth.models import auth
 from datetime import datetime, timezone
 
@@ -54,6 +56,7 @@ def createuser(request):
                 user.save()
 
 
+                send_mail_after_registration(email,email_token)
                 return JsonResponse(
                     {'success':'True'},
                     safe = False
@@ -65,6 +68,7 @@ def createuser(request):
     elif 'admin_session' not in request.session:
         return redirect('/admin/adminlogin')
 
+        
 def updateuser(request):
     
     pass
@@ -90,11 +94,10 @@ def deleteuser(request, id):
 
 
 #function for sending data
-'''def send_mail_after_registration(email , token):
+def send_mail_after_registration(email , token):
 
     subject = 'CEA E_Library Your accounts need to be verified'
     message = f'Hi login through this Link to verify your account http://127.0.0.1:8000/verify/{token} \n '
     email_from = settings.EMAIL_HOST_USER
     recipient_list = [email]
-    send_mail(subject, message , email_from ,recipient_list )'''
-    
+    send_mail(subject, message , email_from ,recipient_list )
