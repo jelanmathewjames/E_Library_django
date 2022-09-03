@@ -35,12 +35,8 @@
                 <td><button type="button" class="btn btn-success" id="edit">Edit</button></td>
                 <td>
                   
-                  {% if user.book1 != None %}
-                  <button type="button" class="btn btn-danger" id="delete">Delete</button>
-                  {% elif user.book2 != None %}
-                  <button type="button" class="btn btn-danger" id="delete">Delete</button>
-                  {% elif user.book3 != None %}
-                  <button type="button" class="btn btn-danger" id="delete">Delete</button>
+                  {% if user.book1 != None or user.book2 != None or user.book2 != None%}
+                  <a><p>book in hand</a>
                   {% else %}
                   <a href="{% url 'deleteuser' user.id %}">
                     <button type="button" class="btn btn-danger">Delete</button>

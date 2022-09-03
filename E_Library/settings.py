@@ -12,6 +12,13 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 
 from pathlib import Path
 import os
+import environ
+from decouple import config
+
+
+
+env = environ.Env()
+environ.Env.read_env()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -22,7 +29,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 # SECURITY WARNING: keep the secret key used in production secret!
 
-SECRET_KEY = 'django-insecure-n5h&x0@7y_&7gdcv18)^dk3diy!pq-ksqxuhm@=mmo_3kp^e=l'
+SECRET_KEY = config('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
@@ -85,10 +92,10 @@ WSGI_APPLICATION = 'E_Library.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME' : 'd26htt1900smip',
+        'NAME' : config('NAME'),
         'USER': 'fnansbzwjdobmb',
-        'PASSWORD' : 'a571f81ca8ebc1ca2559cc380427acc54b81ed0652ee6eb0e0596192a9249960',
-        'HOST' : 'ec2-52-54-212-232.compute-1.amazonaws.com',
+        'PASSWORD' : config('PASSWORD'),
+        'HOST' : config('HOST'),
        
     }
 }
@@ -148,5 +155,5 @@ EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_USE_TLS = True
 EMAIL_PORT = 587
-EMAIL_HOST_USER = 'elibrarycea@gmail.com'
-EMAIL_HOST_PASSWORD = 'szopjfksttmgxnxr'
+EMAIL_HOST_USER = config('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD')
