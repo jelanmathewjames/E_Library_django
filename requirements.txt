@@ -21,6 +21,7 @@ pycparser==2.21
 pyOpenSSL==22.0.0
 python-dateutil==1.5
 python-decouple==3.6
+python-dotenv==0.20.0
 pytz==2021.1
 requests==2.27.1
 scout-apm==2.24.2
