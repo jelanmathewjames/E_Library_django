@@ -25,7 +25,7 @@ python-dotenv==0.20.0
 pytz==2021.1
 requests==2.27.1
 scout-apm==2.24.2
-sqlparse==0.4.2
+sqlparse==0.4.4
 urllib3==1.26.7
 waitress==2.1.2
 whitenoise==5.3.0
